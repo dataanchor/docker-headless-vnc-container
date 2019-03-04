@@ -17,7 +17,7 @@ LABEL io.k8s.description="Headless VNC Container with Xfce window manager, firef
 ENV DISPLAY=:1 \
     VNC_PORT=5901 \
     NO_VNC_PORT=6901
-EXPOSE $VNC_PORT $NO_VNC_PORT
+EXPOSE $VNC_PORT $NO_VNC_PORT 22
 
 ### Envrionment config
 ENV HOME=/headless \
@@ -49,7 +49,6 @@ RUN $INST_SCRIPTS/tigervnc.sh
 RUN $INST_SCRIPTS/no_vnc.sh
 
 ### Install firefox and chrome browser
-RUN $INST_SCRIPTS/firefox.sh
 RUN $INST_SCRIPTS/chrome.sh
 
 ### Install xfce UI
@@ -60,6 +59,9 @@ ADD ./src/common/xfce/ $HOME/
 RUN $INST_SCRIPTS/libnss_wrapper.sh
 ADD ./src/common/scripts $STARTUPDIR
 RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME
+
+### install sftp
+RUN $INST_SCRIPTS/sftp.sh
 
 USER 1000
 

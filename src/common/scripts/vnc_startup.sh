@@ -94,9 +94,12 @@ vncserver -kill $DISPLAY &> $STARTUPDIR/vnc_startup.log \
     || rm -rfv /tmp/.X*-lock /tmp/.X11-unix &> $STARTUPDIR/vnc_startup.log \
     || echo "no locks present"
 
+cp $STARTUPDIR/xstartup $HOME/.vnc/xstartup
+python $STARTUPDIR/watch-files.py $HOME/sftp &
 echo -e "start vncserver with param: VNC_COL_DEPTH=$VNC_COL_DEPTH, VNC_RESOLUTION=$VNC_RESOLUTION\n..."
 if [[ $DEBUG == true ]]; then echo "vncserver $DISPLAY -depth $VNC_COL_DEPTH -geometry $VNC_RESOLUTION"; fi
 vncserver $DISPLAY -depth $VNC_COL_DEPTH -geometry $VNC_RESOLUTION &> $STARTUPDIR/no_vnc_startup.log
+
 echo -e "start window manager\n..."
 $HOME/wm_startup.sh &> $STARTUPDIR/wm_startup.log
 
@@ -120,5 +123,3 @@ else
     echo "Executing command: '$@'"
     exec "$@"
 fi
-
-cp $STARTUPDIR/xstartup $HOME/.vnc/xstartup
