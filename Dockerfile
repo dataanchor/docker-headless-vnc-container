@@ -63,7 +63,6 @@ RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME
 ### install sftp
 RUN $INST_SCRIPTS/sftp.sh
 
-USER 1000
 
 ENTRYPOINT ["/dockerstartup/vnc_startup.sh"]
 CMD ["--wait"]

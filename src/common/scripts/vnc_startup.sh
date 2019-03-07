@@ -1,7 +1,4 @@
 #!/bin/bash
-### every exit != 0 fails the script
-set -e
-
 ## print out help
 help (){
 echo "
@@ -95,7 +92,8 @@ vncserver -kill $DISPLAY &> $STARTUPDIR/vnc_startup.log \
     || echo "no locks present"
 
 cp $STARTUPDIR/xstartup $HOME/.vnc/xstartup
-python $STARTUPDIR/watch-files.py $HOME/sftp &
+python $STARTUPDIR/watch-files.py /logs/$POD_NAME &
+sh $STARTUPDIR/watch.sh &
 echo -e "start vncserver with param: VNC_COL_DEPTH=$VNC_COL_DEPTH, VNC_RESOLUTION=$VNC_RESOLUTION\n..."
 if [[ $DEBUG == true ]]; then echo "vncserver $DISPLAY -depth $VNC_COL_DEPTH -geometry $VNC_RESOLUTION"; fi
 vncserver $DISPLAY -depth $VNC_COL_DEPTH -geometry $VNC_RESOLUTION &> $STARTUPDIR/no_vnc_startup.log

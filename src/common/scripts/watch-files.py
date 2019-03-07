@@ -43,7 +43,7 @@ class CustomEventHandler(PatternMatchingEventHandler):
         if (file_type == "text/plain" or file_type == "image/jpeg" or file_type == "image/jpg"
             or file_type == "image/png" or file_type == "application/pdf"):
             # TODO: Change this command based on file type. gedit for text files
-            command = "google-chrome " + event.src_path
+            command = "google-chrome " + event.src_path +' &'
             self.executeSystemCommand(command)
         elif (file_type == "application/msword" or file_type == "application/vnd.openxmlformats-officedocument.presentationml.presentation"):
             # TODO: Change this command based on file type. Libre for doc, docx files
