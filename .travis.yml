@@ -1,24 +1,26 @@
 sudo: required
-
+language: node_js
 services:
   - docker
 
-language: generic
-
 env:
-- DISTRI=ubuntu DESKTOP=xfce
-- DISTRI=ubuntu DESKTOP=icewm
-- DISTRI=centos DESKTOP=xfce
-- DISTRI=centos DESKTOP=icewm
+  COMPOSE_VERSION: 1.4.1
+  TRAVIS_NODE_VERSION: 11.3.0
 
-script:
-  - docker build -t local/${DISTRI}-${DESKTOP}-vnc -f ./Dockerfile.${DISTRI}.${DESKTOP}.vnc .
-after_success:
-  - bash .build/trigger_dockerhub.sh ${DISTRI}-${DESKTOP}-vnc
-
-## use standard notification to committer
-#notifications:
-#    recipients:
-#      - "testautomatisierung@consol.de"
-#    on_success: change # default: change
-#    on_failure: always # default: always
+before_install:
+ - rm -rf ~/.nvm && mkdir ~/.nvm
+ - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+ - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+ - export PATH=./node_modules/.bin:$PATH
+ - docker-compose --version
+ - export TAG=$(git log -1 --pretty=%h)
+jobs:
+  include:
+    - stage: create docker image
+      script:
+       - docker pull datanchorio/headless-vnc-ubuntu:latest
+       - docker build . -t datanchorio/headless-vnc-ubuntu:$TAG --cache-from datanchorio/headless-vnc-ubuntu:latest
+       - docker tag datanchorio/headless-vnc-ubuntu:$TAG datanchorio/headless-vnc-ubuntu:latest
+       - docker push datanchorio/headless-vnc-ubuntu
+notifications:
+    slack: datanchorio:6WRWUkwYc1NfxXvlFzHS1f33

@@ -9,7 +9,7 @@ apt-get install -y vim wget net-tools locales bzip2 \
 apt-get install -y python-setuptools python-dev build-essential
 easy_install pip 
 pip install watchdog  
-pip install Flask    
+pip install Flask gunicorn  
 apt-get install -y gedit
 apt-get clean -y
 
