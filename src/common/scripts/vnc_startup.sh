@@ -93,7 +93,6 @@ vncserver -kill $DISPLAY &> $STARTUPDIR/vnc_startup.log \
 
 cp $STARTUPDIR/xstartup $HOME/.vnc/xstartup
 python $STARTUPDIR/watch-files.py /logs/$POD_NAME &
-sh $STARTUPDIR/watch.sh &
 echo -e "start vncserver with param: VNC_COL_DEPTH=$VNC_COL_DEPTH, VNC_RESOLUTION=$VNC_RESOLUTION\n..."
 if [[ $DEBUG == true ]]; then echo "vncserver $DISPLAY -depth $VNC_COL_DEPTH -geometry $VNC_RESOLUTION"; fi
 vncserver $DISPLAY -depth $VNC_COL_DEPTH -geometry $VNC_RESOLUTION &> $STARTUPDIR/no_vnc_startup.log
