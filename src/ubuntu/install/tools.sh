@@ -8,7 +8,8 @@ apt-get install -y vim wget net-tools locales bzip2 \
     python-numpy #used for websockify/novnc
 apt-get install -y python-setuptools python-dev build-essential
 easy_install pip 
-pip install watchdog    
+pip install watchdog  
+pip install Flask    
 apt-get install -y gedit
 apt-get clean -y
 

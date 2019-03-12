@@ -16,8 +16,9 @@ LABEL io.k8s.description="Headless VNC Container with Xfce window manager, firef
 # noVNC webport, connect via http://IP:6901/?password=vncpassword
 ENV DISPLAY=:1 \
     VNC_PORT=5901 \
-    NO_VNC_PORT=6901
-EXPOSE $VNC_PORT $NO_VNC_PORT 22
+    NO_VNC_PORT=6901 \
+    FLASK_PORT=5000
+EXPOSE $VNC_PORT $NO_VNC_PORT $FLASK_PORT
 
 ### Envrionment config
 ENV HOME=/headless \
