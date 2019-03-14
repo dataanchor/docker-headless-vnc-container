@@ -9,6 +9,8 @@ mkdir $HOME/sftp
 chown 1000:0 $HOME/sftp
 chmod 777 $HOME/sftp
 apt-get install -y curl
+apt-get install -y mupdf mupdf-tools
+apt-get install -y eog
 apt-get clean -y
 
 echo "running python script"
