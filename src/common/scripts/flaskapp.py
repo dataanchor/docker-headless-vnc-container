@@ -19,22 +19,22 @@ def open_file(fileName):
     try:
         if fileType in libreOfficeTypes:
             # sudo apt-get install libreoffice
-            command = "libreoffice ~/Downloads/" + fileName + ' &'
+            command = "libreoffice /logs/$POD_NAME/" + fileName + ' &'
             response = os.system(command)
             return response, 200
         elif fileType == 'pdf':
             # sudo apt-get install mupdf mupdf-tools
-            command = "mupdf ~/Downloads/" + fileName +' &'
+            command = "mupdf /logs/$POD_NAME/" + fileName +' &'
             response = os.system(command)
             return response, 200
         elif fileType == 'txt':
             # sudo apt install gedit gedit-plugins gedit-common
-            command = "gedit ~/Downloads/" + fileName +' &'
+            command = "gedit /logs/$POD_NAME/" + fileName +' &'
             response = os.system(command)
             return response, 200
         elif fileType in imageTypes:
             # sudo apt-get install eog
-            command = "eog ~/Downloads/" + fileName +' &'
+            command = "eog /logs/$POD_NAME/" + fileName +' &'
             response = os.system(command)
             return response, 200
         else:
