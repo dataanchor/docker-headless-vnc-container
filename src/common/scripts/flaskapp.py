@@ -1,6 +1,7 @@
 import os
 import subprocess
 import sys
+import signal
 from flask import Flask, make_response, jsonify
 import logging
 app = Flask(__name__)
@@ -26,27 +27,27 @@ def open_file(fileName):
             command = "libreoffice " + filePath + ' &'
             global process
             process = subprocess.Popen(command.split())
-            return 'file opened'
+            return str(process.pid)
         elif fileType == 'pdf':
             # sudo apt-get install mupdf mupdf-tools
             command = "mupdf " + filePath +' &'
             global process
             process = subprocess.Popen(command.split())
             #response = os.system(command)
-            return 'file opened'
+            return str(process.pid)
         elif fileType == 'txt':
             # sudo apt install gedit gedit-plugins gedit-common
             command = "gedit " + filePath +' &'
             logging.info("came to txt %s", command)
             global process
             process = subprocess.Popen(command.split())
-            return 'file opened'
+            return str(process.pid)
         elif fileType in imageTypes:
             # sudo apt-get install eog
             command = "eog " + filePath +' &'
             global process
             process = subprocess.Popen(command.split())
-            return 'file opened'
+            return str(process.pid)
         else:
             response = make_response(jsonify(message="File type not supported"))
             return response, 500
@@ -55,10 +56,9 @@ def open_file(fileName):
         e = sys.exc_info()[0]
         return e, 400
 
-@app.route("/file/<fileName>", methods=['DELETE'])
-def delete_file(fileName):
-    global process
-    process.terminate()
+@app.route("/file/<fileName>/<pid>", methods=['DELETE'])
+def delete_file(fileName,pid):
+    os.kill(pid,signal.SIGKILL)
     filePath = '/logs/'+os.environ['HOSTNAME']+'/'+fileName
     os.remove(filePath)
     return 'deleted file'
