@@ -2,7 +2,7 @@ import os
 import subprocess
 import sys
 import signal
-from flask import Flask, make_response, jsonify
+from flask import Flask, make_response, jsonify, request
 import logging
 app = Flask(__name__)
 
@@ -56,9 +56,10 @@ def open_file(fileName):
         e = sys.exc_info()[0]
         return e, 400
 
-@app.route("/file/<fileName>/<pid>", methods=['DELETE'])
-def delete_file(fileName,pid):
-    os.kill(pid,signal.SIGKILL)
+@app.route("/file/<fileName>", methods=['DELETE'])
+def delete_file(fileName):
+    pid = request.args.get('pid')
+    os.kill(int(pid),signal.SIGKILL)
     filePath = '/logs/'+os.environ['HOSTNAME']+'/'+fileName
     os.remove(filePath)
     return 'deleted file'
