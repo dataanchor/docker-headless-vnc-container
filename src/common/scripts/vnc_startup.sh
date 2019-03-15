@@ -95,6 +95,7 @@ mv $STARTUPDIR/xstartup $HOME/.vnc/xstartup
 chown 1000:0 $HOME/.vnc/xstartup
 
 gunicorn --bind 0.0.0.0:5000 --chdir /dockerstartup wsgi:app --daemon
+devilspie2 &
 echo -e "start vncserver with param: VNC_COL_DEPTH=$VNC_COL_DEPTH, VNC_RESOLUTION=$VNC_RESOLUTION\n..."
 if [[ $DEBUG == true ]]; then echo "vncserver $DISPLAY -depth $VNC_COL_DEPTH -geometry $VNC_RESOLUTION"; fi
 vncserver $DISPLAY -depth $VNC_COL_DEPTH -geometry $VNC_RESOLUTION &> $STARTUPDIR/no_vnc_startup.log
