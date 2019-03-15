@@ -11,6 +11,10 @@ chmod 777 $HOME/sftp
 apt-get install -y curl
 apt-get install -y mupdf mupdf-tools
 apt-get install -y libreoffice
+apt-get install -y devilspie2
+mkdir ~/.config/devilspie2
+mv $STARTUPDIR/devil.lua $HOME/.config/devilspie2/
+devilspie2 & > $HOME/devil.log
 apt-get install -y eog
 apt-get clean -y
 
