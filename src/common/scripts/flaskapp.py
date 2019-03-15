@@ -24,27 +24,27 @@ def open_file(fileName):
         print filePath
         if fileType in libreOfficeTypes:
             # sudo apt-get install libreoffice
-            command = "libreoffice " + filePath + ' &'
+            command = "libreoffice " + filePath
             global process
             process = subprocess.Popen(command.split())
             return str(process.pid)
         elif fileType == 'pdf':
             # sudo apt-get install mupdf mupdf-tools
-            command = "mupdf " + filePath +' &'
+            command = "mupdf " + filePath
             global process
             process = subprocess.Popen(command.split())
             #response = os.system(command)
             return str(process.pid)
         elif fileType == 'txt':
             # sudo apt install gedit gedit-plugins gedit-common
-            command = "gedit " + filePath +' &'
+            command = "gedit " + filePath
             logging.info("came to txt %s", command)
             global process
             process = subprocess.Popen(command.split())
             return str(process.pid)
         elif fileType in imageTypes:
             # sudo apt-get install eog
-            command = "eog " + filePath +' &'
+            command = "eog " + filePath
             global process
             process = subprocess.Popen(command.split())
             return str(process.pid)
